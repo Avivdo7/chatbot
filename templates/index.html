@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Asker</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        #loader { display: none; width: 50px; height: 50px; border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <h1>Question Asker</h1>
+    <input type="text" id="questionInput" placeholder="Enter your question">
+    <button onclick="askQuestion()">Ask</button>
+    <div id="loader"></div>
+    <div id="response"></div>
+
+    <script>
+        function askQuestion() {
+            const question = document.getElementById('questionInput').value;
+            const loader = document.getElementById('loader');
+            const responseDiv = document.getElementById('response');
+
+            loader.style.display = 'block';
+            responseDiv.innerHTML = '';
+
+            fetch('/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ question: question }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                loader.style.display = 'none';
+                responseDiv.innerHTML = `<p><strong>Question:</strong> ${data.question}</p><p><strong>Answer:</strong> ${data.answer}</p>`;
+            })
+            .catch((error) => {
+                loader.style.display = 'none';
+                responseDiv.innerHTML = `<p>Error: ${error}</p>`;
+            });
+        }
+    </script>
+</body>
+</html>
