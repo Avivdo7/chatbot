@@ -1,8 +1,7 @@
 # app.py
 from flask import Flask, request, jsonify, render_template
-from sqlalchemy import create_engine, Column, Integer, String, Text
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from dal.database import get_db
+from dal.repositories import QuestionRepository
 import os
 from dotenv import load_dotenv
 from huggingface_hub import InferenceClient
@@ -15,23 +14,6 @@ app = Flask(__name__)
 client = InferenceClient(
     api_key=os.environ.get("API_KEY"),
 )
-
-# Database setup
-DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://username:password@localhost/dbname')
-engine = create_engine(DATABASE_URL)
-Session = sessionmaker(bind=engine)
-Base = declarative_base()
-
-
-class Question(Base):
-    __tablename__ = 'questions'
-
-    id = Column(Integer, primary_key=True)
-    question = Column(String(500), nullable=False)
-    answer = Column(Text, nullable=False)
-
-
-Base.metadata.create_all(engine)
 
 @app.route('/')
 def home():
@@ -65,11 +47,9 @@ def ask_question():
         answer = f"An error occurred: {str(e)}"
 
     # Save to database
-    session = Session()
-    new_question = Question(question=question, answer=answer)
-    session.add(new_question)
-    session.commit()
-    session.close()
+    with get_db() as db:
+        repo = QuestionRepository(db)
+        new_question = repo.create_question(question, answer)
 
     return jsonify({"question": question, "answer": answer})
 
