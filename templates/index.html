@@ -92,7 +92,8 @@
 
     <script>
         function askQuestion() {
-            const question = document.getElementById('questionInput').value;
+            const questionInput = document.getElementById('questionInput');
+            const question = questionInput.value;
             const loader = document.getElementById('loader');
             const responseDiv = document.getElementById('response');
 
@@ -110,6 +111,7 @@
             .then(data => {
                 loader.style.display = 'none';
                 responseDiv.innerHTML = `<p><strong>Question:</strong> ${data.question}</p><p><strong>Answer:</strong> ${data.answer}</p>`;
+                questionInput.value = ''; // Clear the input field here
             })
             .catch((error) => {
                 loader.style.display = 'none';
@@ -117,5 +119,6 @@
             });
         }
     </script>
+
 </body>
 </html>
