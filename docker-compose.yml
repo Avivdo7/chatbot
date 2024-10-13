@@ -14,7 +14,7 @@ services:
       - .:/app
 
   db:
-    image: postgres:14
+    image: postgres:15
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
@@ -29,6 +29,17 @@ services:
       - "max_connections=2"
       - "-c"
       - "shared_buffers=256MB"
+
+  test:
+    build: .
+    environment:
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      - API_KEY=${API_KEY}
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    command: ["pytest"]
 
 volumes:
   postgres_data:

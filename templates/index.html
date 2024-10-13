@@ -5,9 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Question Asker</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-        #loader { display: none; width: 50px; height: 50px; border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* General Body Style */
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f3f7f9; /* Light blue-gray background */
+            color: #333; /* Dark gray text */
+        }
+
+        /* Title Style */
+        h1 {
+            text-align: center;
+            color: #2c3e50; /* Dark slate blue */
+        }
+
+        /* Input and Button Styling */
+        #questionInput {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7; /* Light gray border */
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3498db; /* Medium blue button */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+        }
+
+        /* Loader Styling */
+        #loader {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Response Styling */
+        #response {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #ecf0f1; /* Light gray */
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        #response p {
+            margin: 10px 0;
+        }
+
+        #response strong {
+            color: #3498db; /* Medium blue for emphasis */
+        }
     </style>
 </head>
 <body>
