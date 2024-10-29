@@ -2,7 +2,7 @@
 ![Docker](https://img.shields.io/badge/docker-ready-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-This project developed using Flask and integrates with the OpenAI API to handle user questions  
+This project developed using Flask and integrates with the Hugging Face to handle user questions  
 returning responses that are stored in a PostgreSQL database.  
 The entire application, including the database, is containerized using Docker, with Docker Compose for easy orchestration.  
 A basic test suite using Pytest is included to ensure functionality.  
